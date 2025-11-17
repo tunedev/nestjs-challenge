@@ -1,33 +1,35 @@
 version: "3.8"
 
 services:
-  mongodb:
+  mongodb-test:
     image: mongo:latest
+    container_name: mongodb-test
     command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
     ports:
-      - "27017:27017"
+      - "27117:27017"
     environment:
       MONGO_INITDB_DATABASE: records
     healthcheck:
       # use 'mongo' instead of 'mongosh' if MongoDB version is lower than 5
-      test: mongosh --eval 'db.runCommand("ping").ok' localhost:27017/test --quiet
+      test: ["CMD", "mongosh", "--eval", "db.runCommand('ping').ok"]
       interval: 2s
       timeout: 3s
       retries: 5
 
-  mongo-init:
+  mongo-test-init:
     image: mongo:latest
+    container_name: mongo-test-init
     restart: "no"
     depends_on:
-      mongodb:
+      mongodb-test:
         condition: service_healthy
     command: >
-      mongosh --host mongodb:27017 --eval
+      mongosh --host mongodb-test:27017 --eval
       '
-      rs.initiate( {
-         _id : "rs0",
-         members: [
-            { _id: 0, host: "localhost:27017" }
-         ]
+      rs.initiate({
+        _id: "rs0",
+        members: [
+          { _id: 0, host: "mongodb-test:27017" }
+        ]
       })
       '
