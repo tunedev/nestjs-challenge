@@ -52,4 +52,11 @@ export const AppConfig = {
   port: process.env.PORT || 3000,
   logLevel: resolveLogLevel(),
   performanceDebugger: process.env.PERFORMANCE_DEBUGGER === 'true',
+  transientRetryMax: (() => {
+    try {
+      return parseInt(process.env.TRANAIENT_RETRY_MAX || '3');
+    } catch (error) {
+      return 3;
+    }
+  })(),
 };

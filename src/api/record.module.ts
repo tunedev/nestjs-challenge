@@ -9,6 +9,10 @@ import {
   MusicBrainzRecordSchema,
 } from './schemas/musicbrainz-record.schema';
 import { HttpModule } from '@nestjs/axios';
+import { OrderItem, OrderItemSchema } from './schemas/order-item.schema';
+import { Order, OrderSchema } from './schemas/order.schema';
+import { OrderController } from './controllers/order.controller';
+import { OrderService } from './services/order.service';
 
 @Module({
   imports: [
@@ -16,9 +20,11 @@ import { HttpModule } from '@nestjs/axios';
     MongooseModule.forFeature([
       { name: Record.name, schema: RecordSchema },
       { name: MusicBrainzRecord.name, schema: MusicBrainzRecordSchema },
+      { name: OrderItem.name, schema: OrderItemSchema },
+      { name: Order.name, schema: OrderSchema },
     ]),
   ],
-  controllers: [RecordController],
-  providers: [RecordService, MusicBrainzService],
+  controllers: [RecordController, OrderController],
+  providers: [RecordService, MusicBrainzService, OrderService],
 })
 export class RecordModule {}
