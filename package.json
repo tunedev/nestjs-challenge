@@ -20,7 +20,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "npm run mongo_test:start && jest --config ./test/jest-e2e.json --detectOpenHandles --forceExit || true && npm run mongo_test:down",
+    "test:e2e": "npm run mongo_test:start && jest --config ./test/jest-e2e.json --detectOpenHandles --forceExit && npm run mongo_test:down",
     "setup:db": "ts-node -r tsconfig-paths/register setup-db.ts"
   },
   "dependencies": {
