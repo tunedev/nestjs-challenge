@@ -48,8 +48,8 @@ RecordSchema.set('toJSON', {
   virtuals: true,
   versionKey: false,
   transform: function (doc, ret) {
-    if (ret.tracklist && Array.isArray(ret.tracklist.tracklist)) {
-      ret.tracklist = ret.tracklist.tracklist;
+    if (ret.tracklist && Array.isArray((ret.tracklist as any)?.tracklist)) {
+      ret.tracklist = (ret.tracklist as any).tracklist;
     } else if (ret.tracklist && !Array.isArray(ret.tracklist)) {
       ret.tracklist = [];
     }
